@@ -4,6 +4,7 @@ import { MantineProvider } from "@mantine/core";
 import styles from "./App.module.css";
 import { Tabs } from "./components/Tabs";
 import { IconBook, IconPlant2 } from "@tabler/icons-react";
+import Affirmations from "./views/Affirmations/Affirmations";
 
 const App = () => {
   return (
@@ -24,7 +25,7 @@ const App = () => {
                 title: "Affirmations",
                 icon: IconBook,
                 render() {
-                  return "Affirmations";
+                  return <Affirmations />;
                 },
               },
             ]}
