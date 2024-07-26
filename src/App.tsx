@@ -1,10 +1,16 @@
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 
+import styles from "./App.module.css";
+import Home from "./Home";
+
 const App = () => {
   return (
     <MantineProvider>
-      <div>Hello World</div>;
+      <main className={styles.app}>
+        <Home />
+      </main>
+      ;
     </MantineProvider>
   );
 };
