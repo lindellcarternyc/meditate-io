@@ -1,5 +1,4 @@
 .container {
-  /* width: 100%; */
   height: 100%;
   --gradient: linear-gradient(transparent);
   background: var(--gradient);

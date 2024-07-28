@@ -19,7 +19,6 @@ export default function LinearGradient({
       "--gradient",
       `linear-gradient(${colors.join(", ")})`
     );
-    console.log(divRef);
   }, [colors]);
 
   return (
