@@ -1,7 +1,7 @@
 .container {
   height: 100%;
   --background: "";
-  background: var(--background) no-repeat center center fixed;
+  background: var(--background) no-repeat center center / cover fixed;
   display: flex;
   flex-direction: column;
   gap: 4rem;
