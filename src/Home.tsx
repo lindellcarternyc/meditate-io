@@ -2,7 +2,11 @@ import { Button, Title } from "@mantine/core";
 import AppGradient from "./components/AppGradient";
 import styles from "./Home.module.css";
 
-export default function Home() {
+interface HomeProps {
+  onClickGetStarted: () => void;
+}
+
+export default function Home({ onClickGetStarted }: HomeProps) {
   return (
     <div className={styles.container}>
       <AppGradient colors={["rgba(0, 0, 0, 0.4)", "rgba(0, 0, 0, 0.8)"]}>
@@ -12,7 +16,7 @@ export default function Home() {
             <Title size={"h3"}>Simplifying Meditation for Everyone</Title>
           </header>
           <footer>
-            <Button type="button" fullWidth>
+            <Button type="button" fullWidth onClick={onClickGetStarted}>
               Get Started
             </Button>
           </footer>

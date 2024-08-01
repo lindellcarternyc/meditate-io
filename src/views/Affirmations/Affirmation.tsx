@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
 import { GalleryPreviewData } from "../../constants/models/AffirmationCategory";
 
 import styles from "./Affirmation.module.css";
 import { Title } from "@mantine/core";
-import { IconCircleArrowLeft } from "@tabler/icons-react";
+import BackButton from "../../components/BackButton";
+import ImageBackground from "../../components/ImageBackground";
 
 interface AffirmationProps {
   affirmation: GalleryPreviewData;
@@ -14,30 +14,14 @@ export default function Affirmation({
   affirmation,
   onClickBack,
 }: AffirmationProps) {
-  const divRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    divRef.current?.style.setProperty(
-      "--background",
-      `url(${affirmation.image})`
-    );
-  }, [affirmation]);
-
   const sentences = affirmation.text.replace(".", ".\n").split("\n");
 
   return (
-    <div ref={divRef} className={styles.container}>
-      <button
-        type="button"
-        title="Go Back"
-        className={styles.back}
-        onClick={onClickBack}
-      >
-        <IconCircleArrowLeft size={50} />
-      </button>
+    <ImageBackground className={styles.container} image={affirmation.image}>
+      <BackButton onClick={onClickBack} />
       {sentences.map((sentence) => (
         <Title size="h2">{sentence}</Title>
       ))}
-    </div>
+    </ImageBackground>
   );
 }

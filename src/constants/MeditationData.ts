@@ -44,12 +44,19 @@ export const MEDITATION_DATA: MeditationType[] = [
   },
 ];
 
+import trees from "../assets/audio/trees.mp3";
+import river from "../assets/audio/river.mp3";
+import meditate from "../assets/audio/meditate-under-tree.mp3";
+import beach from "../assets/audio/beach.mp3";
+import yosemite from "../assets/audio/yosemite-stars.mp3";
+import waterfall from "../assets/audio/waterfall.mp3";
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const AUDIO_FILES: { [key: string]: any } = {
-  "trees.mp3": require("@/assets/audio/trees.mp3"),
-  "river.mp3": require("@/assets/audio/river.mp3"),
-  "meditate-under-tree.mp3": require("@/assets/audio/meditate-under-tree.mp3"),
-  "beach.mp3": require("@/assets/audio/beach.mp3"),
-  "yosemite-stars.mp3": require("@/assets/audio/yosemite-stars.mp3"),
-  "waterfall.mp3": require("@/assets/audio/waterfall.mp3"),
+  "trees.mp3": trees,
+  "river.mp3": river,
+  "meditate-under-tree.mp3": meditate,
+  "beach.mp3": beach,
+  "yosemite-stars.mp3": yosemite,
+  "waterfall.mp3": waterfall,
 };
