@@ -1,12 +1,7 @@
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 
-// import styles from "./App.module.css";
-import { Tabs } from "./components/Tabs";
-import { IconBook, IconPlant2 } from "@tabler/icons-react";
 import Affirmations from "./views/Affirmations/Affirmations";
-// import Home from "./Home";
-import Meditations from "./views/Meditations/Meditations";
 import MeditationsList from "./views/Meditations/MeditationsList";
 
 import Home from "./routes/home";
