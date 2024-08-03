@@ -2,8 +2,9 @@
   display: flex;
   justify-content: space-between;
   height: 100%;
-  background: url(assets/meditation-images/beach.webp) no-repeat center center /
-    cover;
+  background: url(../assets/meditation-images/beach.webp) no-repeat center
+    center / cover;
+  height: 100vh;
 }
 
 .content {

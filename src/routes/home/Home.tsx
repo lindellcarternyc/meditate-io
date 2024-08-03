@@ -1,12 +1,9 @@
 import { Button, Title } from "@mantine/core";
-import AppGradient from "./components/AppGradient";
+import AppGradient from "../../components/AppGradient";
 import styles from "./Home.module.css";
+import { Link } from "react-router-dom";
 
-interface HomeProps {
-  onClickGetStarted: () => void;
-}
-
-export default function Home({ onClickGetStarted }: HomeProps) {
+export default function Home() {
   return (
     <div className={styles.container}>
       <AppGradient colors={["rgba(0, 0, 0, 0.4)", "rgba(0, 0, 0, 0.8)"]}>
@@ -16,7 +13,7 @@ export default function Home({ onClickGetStarted }: HomeProps) {
             <Title size={"h3"}>Simplifying Meditation for Everyone</Title>
           </header>
           <footer>
-            <Button type="button" fullWidth onClick={onClickGetStarted}>
+            <Button type="button" fullWidth component={Link} to="/main">
               Get Started
             </Button>
           </footer>

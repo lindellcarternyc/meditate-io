@@ -1,16 +1,14 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode } from "react";
 import { MeditationType } from "../../constants/MeditationData";
 
 interface MeditationContextValue {
   meditations: MeditationType[];
-  selectedMeditation: MeditationType | null;
-  selectMeditation: (meditation: MeditationType | null) => void;
+  getMeditation: (id: number) => MeditationType | null;
 }
 
 export const MeditationContext = createContext<MeditationContextValue>({
   meditations: [],
-  selectedMeditation: null,
-  selectMeditation: () => {},
+  getMeditation: () => null,
 });
 
 import { MEDITATION_DATA } from "../../constants/MeditationData";
@@ -19,20 +17,14 @@ export default function MeditationProvider({
 }: {
   children: ReactNode;
 }) {
-  const [selectedMeditation, setSelectedMeditation] =
-    useState<MeditationType | null>(null);
-
-  const onSelect = (meditation: MeditationType | null) => {
-    console.log("selectMeditation", meditation);
-    setSelectedMeditation(() => meditation);
+  const getMeditation = (id: number) => {
+    return MEDITATION_DATA[id - 1] || null;
   };
-
   return (
     <MeditationContext.Provider
       value={{
         meditations: MEDITATION_DATA,
-        selectedMeditation,
-        selectMeditation: onSelect,
+        getMeditation,
       }}
     >
       {children}

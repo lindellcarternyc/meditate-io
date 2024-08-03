@@ -1,26 +1,29 @@
-import { GalleryPreviewData } from "../../constants/models/AffirmationCategory";
-
 import styles from "./Affirmation.module.css";
 import { Title } from "@mantine/core";
 import BackButton from "../../components/BackButton";
 import ImageBackground from "../../components/ImageBackground";
+import { useAffirmations } from "../../hooks/use-affirmations";
+import { useParams } from "react-router-dom";
 
-interface AffirmationProps {
-  affirmation: GalleryPreviewData;
-  onClickBack: () => void;
-}
+export default function Affirmation() {
+  const { getAffirmation } = useAffirmations();
+  const { galleryId, affirmationId } = useParams();
 
-export default function Affirmation({
-  affirmation,
-  onClickBack,
-}: AffirmationProps) {
+  const affirmation = getAffirmation(Number(galleryId), Number(affirmationId));
+
+  if (!affirmation) {
+    throw new Error("Affirmation not found");
+  }
+
   const sentences = affirmation.text.replace(".", ".\n").split("\n");
 
   return (
     <ImageBackground className={styles.container} image={affirmation.image}>
-      <BackButton onClick={onClickBack} />
-      {sentences.map((sentence) => (
-        <Title size="h2">{sentence}</Title>
+      <BackButton onClick={() => {}} />
+      {sentences.map((sentence, idx) => (
+        <Title size="h2" key={idx}>
+          {sentence}
+        </Title>
       ))}
     </ImageBackground>
   );

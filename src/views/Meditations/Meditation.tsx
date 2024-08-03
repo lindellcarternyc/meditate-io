@@ -1,67 +1,58 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import BackButton from "../../components/BackButton";
 import ImageBackground from "../../components/ImageBackground";
 import Timer from "../../components/Timer";
 
 import MEDITATION_IMAGES from "../../constants/meditation-images";
-import { AUDIO_FILES, MeditationType } from "../../constants/MeditationData";
+import { AUDIO_FILES } from "../../constants/MeditationData";
 
 import styles from "./Meditation.module.css";
 import { Button } from "@mantine/core";
 import MeditationDurations from "./MeditationDurations";
+import { MeditationContext } from "./MeditationContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { useTimer } from "../../hooks/use-timer";
 
-interface MeditationProps {
-  meditation: MeditationType;
-  onClickBack: () => void;
-}
+export default function Meditation() {
+  const navigate = useNavigate();
 
-export default function Meditation({
-  meditation,
-  onClickBack,
-}: MeditationProps) {
-  const [seconds, setSeconds] = useState(10);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { id } = useParams();
+  const { getMeditation } = useContext(MeditationContext);
+  const meditation = getMeditation(Number(id));
+
+  if (!meditation) {
+    throw new Error("No meditation found");
+  }
+
   const audioRef = useRef<HTMLAudioElement>();
 
   const [isAdjustingDurtion, setIsAdjustingDuration] = useState(false);
 
+  const { isTicking, setIsTicking, seconds, setSeconds } = useTimer();
+
   useEffect(() => {
     const file = AUDIO_FILES[meditation.audio];
     audioRef.current = new Audio(file);
-  }, [meditation.audio]);
+  }, [meditation]);
 
   useEffect(() => {
-    if (isPlaying) {
+    if (isTicking) {
       audioRef.current?.play();
     } else {
       audioRef.current?.pause();
     }
-  }, [isPlaying]);
 
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (isPlaying) {
-      if (seconds <= 0) {
-        setIsPlaying(false);
-      } else {
-        timeout = setTimeout(() => {
-          setSeconds(seconds - 1);
-        }, 1000);
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [seconds, isPlaying]);
+    return () => audioRef.current?.pause();
+  }, [isTicking]);
 
   const togglePlaying = () => {
-    if (isPlaying) return setIsPlaying(false);
+    if (isTicking) return setIsTicking(false);
 
     if (seconds <= 0) {
       setSeconds(10);
     }
 
-    setIsPlaying(true);
+    setIsTicking(true);
   };
 
   const handleAdjustDuration = (seconds?: number) => {
@@ -71,22 +62,21 @@ export default function Meditation({
 
   return (
     <ImageBackground image={MEDITATION_IMAGES[meditation.id - 1]}>
-      <BackButton onClick={onClickBack} />
+      <BackButton onClick={() => navigate("/main/meditations")} />
       <div className={styles.container}>
         <Timer seconds={seconds} />
-        <audio src={meditation.audio} />
         <div className={styles.buttons}>
           <Button
             type="button"
             onClick={() => {
-              setIsPlaying(false);
+              setIsTicking(false);
               setIsAdjustingDuration(true);
             }}
           >
             Adjust Time
           </Button>
           <Button type="button" onClick={togglePlaying}>
-            {isPlaying ? "Stop" : "Start"} Meditation
+            {isTicking ? "Stop" : "Start"} Meditation
           </Button>
         </div>
       </div>

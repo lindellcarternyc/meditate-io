@@ -1,29 +1,16 @@
 import AffirmationsGalleryPreviews from "./AffirmationsGalleryPreviews";
 
 import AFFIRMATION_GALLERY from "../../constants/affirmation-gallery";
-import { GalleryPreviewData } from "../../constants/models/AffirmationCategory";
-import { useState } from "react";
-import Affirmation from "./Affirmation";
+
+import { useNavigate } from "react-router-dom";
 
 export default function Affirmations() {
-  const [selectedAffirmation, setSelectedAffirmation] =
-    useState<GalleryPreviewData | null>(null);
-
+  const navigate = useNavigate();
   const onSelectGalleryPreview = (galleryId: number, previewId: number) => {
-    const gallery = AFFIRMATION_GALLERY[galleryId];
-    if (!gallery) return setSelectedAffirmation(null);
-
-    const preview = gallery.data.find((p) => p.id === previewId);
-    if (!preview) return setSelectedAffirmation(null);
-
-    return setSelectedAffirmation(preview);
+    navigate(`/main/affirmations/${galleryId}/${previewId}`);
   };
-  return selectedAffirmation ? (
-    <Affirmation
-      affirmation={selectedAffirmation}
-      onClickBack={() => setSelectedAffirmation(null)}
-    />
-  ) : (
+
+  return (
     <AffirmationsGalleryPreviews
       galleries={AFFIRMATION_GALLERY}
       onSelectGalleryPreview={onSelectGalleryPreview}

@@ -5,17 +5,19 @@ import MeditationButton from "./MeditationButton";
 import styles from "./MeditationsList.module.css";
 
 import MEDITATION_IMAGES from "../../constants/meditation-images";
-import { MeditationType } from "../../constants/MeditationData";
+import { useContext } from "react";
+import { MeditationContext } from "./MeditationContext";
+import { useNavigate } from "react-router-dom";
 
-interface MeditationsListProps {
-  meditations: MeditationType[];
-  selectMeditation: (meditation: MeditationType) => void;
-}
+// interface MeditationsListProps {
+//   meditations: MeditationType[];
+//   selectMeditation: (meditation: MeditationType) => void;
+// }
 
-export default function MeditationsList({
-  meditations,
-  selectMeditation,
-}: MeditationsListProps) {
+export default function MeditationsList() {
+  const { meditations } = useContext(MeditationContext);
+  const navigate = useNavigate();
+
   return (
     <AppGradient colors={["#161b23", "#0a4d4a", "#766e67"]}>
       <div className={styles.container}>
@@ -33,7 +35,7 @@ export default function MeditationsList({
                     ...meditation,
                     image: MEDITATION_IMAGES[meditation.id - 1],
                   }}
-                  onClick={() => selectMeditation(meditation)}
+                  onClick={() => navigate(`/main/meditations/${meditation.id}`)}
                 />
               );
             })}
